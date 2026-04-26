@@ -5,6 +5,11 @@ Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
   resources :books, only: [:new, :create, :index, :show, :edit, :update, :destroy]
+  
+  resources :books, only: [:new, :create, :index, :show, :destroy] do
+    resource :favorite, only: [:create, :destroy]
+    resources :post_comments, only: [:create,:destroy]
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

@@ -44,6 +44,8 @@
             <th></th>
             <th>Title</th>
             <th>Opinion</th>
+            <th>コメント数</th>
+            <th>いいね</th>
             <th colspan="3"></th>
           </tr>
         </thead>
@@ -57,6 +59,9 @@
               </td>
               <td><%= link_to book.title, book_path(book) %></td>
               <td><%= book.body %></td>
+              <td>
+                <%= link_to "#{book.post_comments.count} コメント", book_path(book.id) %>
+               </td>
             </tr>
           <% end %>
         </tbody>
