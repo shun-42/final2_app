@@ -47,6 +47,8 @@ class UsersController < ApplicationController
       end  
   end
 
+  
+
   private
   def is_matching_login_user
     user = User.find(params[:id])

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "searches/search"
   get "relationships/create"
   get "relationships/destroy"
   root to: "homes#top"
@@ -12,6 +13,8 @@ Rails.application.routes.draw do
     resource :favorite, only: [:create, :destroy]
     resources :post_comments, only: [:create,:destroy]
   end
+
+  get "search" => "searches#search"
 
   resources :users do
     resource :relationships, only: [:create, :destroy]
