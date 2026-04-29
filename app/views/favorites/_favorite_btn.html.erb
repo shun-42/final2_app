@@ -1,0 +1,11 @@
+<%= turbo_frame_tag dom_id(book, :favorite) do %>
+  <% if book.favorited_by?(Current.user) %>
+    <%= link_to book_favorite_path(book), data: { turbo_method: :delete } do %>
+      ♥ <%= book.favorites.count %>
+    <% end %>
+  <% else %>
+    <%= link_to book_favorite_path(book), data: { turbo_method: :post } do %>
+      ♡ <%= book.favorites.count %>
+    <% end %>
+  <% end %>
+<% end %>
