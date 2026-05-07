@@ -21,6 +21,22 @@
           <i class="fas fa-user-cog"></i>
         <% end %>
       </div>
+      <% if Current.user != @user %>
+        <div class="mt-3">
+          <% if Current.user.following?(@user) %>
+              <%# link_to ではなく button_to を使う %>
+            <%= button_to "フォロー外す", user_relationships_path(@user.id), method: :delete, class: "btn btn-info btn-block" %>
+          <% else %>
+              <%# link_to ではなく button_to を使う %>
+            <%= button_to "フォローする", user_relationships_path(@user.id), method: :post, class: "btn btn-success btn-block" %>
+          <% end %>
+          <% if Current.user.following?(@user) && @user.following?(Current.user) %>
+            <div class="mt-2">
+              <%= link_to 'chatを始める', chat_path(@user.id), class: "btn btn-primary btn-block" %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
       <h2 class="mt-3">New book</h2>
       <%= form_with model: Book.new do |f| %>
         <div class="form-group">

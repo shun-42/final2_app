@@ -1,26 +1,28 @@
 Rails.application.routes.draw do
   get "searches/search"
-  get "relationships/create"
-  get "relationships/destroy"
+  
   root to: "homes#top"
   get 'home/about' => 'homes#about', as: 'home_about'
-  resources :users, only: [:new, :create, :index, :show, :edit, :update], path: 'users', path_names: { new: 'sign_up' }
+  resources :users, only: [:new, :create, :index, :show, :edit, :update], path: 'users', path_names: { new: 'sign_up' } do
+      # この中にフォロー機能を入れる（ネスト）
+      resource :relationships, only: [:create, :destroy]
+  
+      get "followings" => "relationships#followings", as: "followings"
+      get "followers" => "relationships#followers", as: "followers"
+  end
   resource :session
   resources :passwords, param: :token
   resources :books, only: [:new, :create, :index, :show, :edit, :update, :destroy]
-  
+  resources :chats, only: [:show, :create]
+
+
+
   resources :books, only: [:new, :create, :index, :show, :destroy] do
     resource :favorite, only: [:create, :destroy]
     resources :post_comments, only: [:create,:destroy]
   end
 
   get "search" => "searches#search"
-
-  resources :users do
-    resource :relationships, only: [:create, :destroy]
-    get "followings" => "relationships#followings", as: "followings"
-    get "followers" => "relationships#followers", as: "followers"
-  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

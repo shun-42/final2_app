@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_many :post_comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
 
+
   has_many :active_relationships,class_name: "Relationship",foreign_key: "follower_id",dependent: :destroy
   has_many :followings, through: :active_relationships, source: :followed
 
@@ -14,7 +15,9 @@ class User < ApplicationRecord
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
   has_many :books, dependent: :destroy
-
+  
+  has_many :user_rooms,dependent: :destroy
+  has_many :chats
 
   validates :name, presence: true, uniqueness: true, length: { minimum: 2, maximum: 20 }
   validates :introduction, length: { maximum: 50 }
@@ -33,7 +36,7 @@ class User < ApplicationRecord
   end
 
   def unfollow(user)
-    active_relationships.find_by(followed_id: user.id).destroy
+    active_relationships.find_by(followed_id: user.id)&.destroy
   end
 
   def following?(user)
