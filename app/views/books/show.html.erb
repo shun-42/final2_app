@@ -44,7 +44,13 @@
             <% end %>
           </td>
           <td><%= link_to @book.title, book_path(@book) %></td>
-          <td><%= @book.body %></td>          
+          <td><%= @book.body %></td> 
+          <tr>
+            <td>Rate</td>
+            <td>
+              <div class="display-raty" data-score="<%= @book.score %>"></div>
+            </td>
+          </tr>         
           <% if @book.user == Current.user %>
             <td><%= link_to "Edit", edit_book_path(@book), class: "btn btn-sm btn-success" %></td>
             <td><%= link_to "Destroy", book_path(@book), data: { turbo_method: :delete, turbo_confirm: "本当に削除？" }, class: "btn btn-sm btn-danger" %></td>

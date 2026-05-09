@@ -16,7 +16,8 @@ Rails.application.routes.draw do
       get "followings" => "relationships#followings", as: "followings"
       get "followers" => "relationships#followers", as: "followers"
   end
-  resource :session
+  get 'session', to: 'sessions#new', as: :new_session
+  resource :session, only: [:create, :destroy]
   resources :passwords, param: :token
   resources :books, only: [:new, :create, :index, :show, :edit, :update, :destroy]
   resources :chats, only: [:show, :create]

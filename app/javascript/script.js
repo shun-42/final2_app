@@ -1,10 +1,14 @@
-document.addEventListener("turbo:load", () => {
-  const elem = document.querySelector("#post_raty");
-  if (!elem) return;
+import Raty from "raty-js";
 
-  new Raty(elem, {
-    scoreName: "book[score]",
-    starOff: 'https://cdnjs.cloudflare.com/ajax/libs/raty/3.1.1/images/star-off.png',
-    starOn: 'https://cdnjs.cloudflare.com/ajax/libs/raty/3.1.1/images/star-on.png',
-  }).init();
+document.addEventListener("turbo:load", () => {
+  const elements = document.querySelectorAll(".raty-display");
+
+  elements.forEach((elem) => {
+    new Raty(elem, {
+      readOnly: true,
+      score: elem.dataset.score,
+      starOn: "/assets/star-on.png",
+      starOff: "/assets/star-off.png",
+    }).init();
+  });
 });
