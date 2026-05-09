@@ -45,6 +45,25 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
   end
 
+  def new_mail
+    @group = Group.find(params[:group_id])
+  end
+
+  def send_mail
+    @group = Group.find(params[:group_id])
+    group_users = @group.users
+    @mail_title =params[:title]
+    @mail_content = params[:content]
+
+    @group_users = @group.users
+
+    @group_users.each do |member|
+      ContactMailer.send_notification(member,@mail_title, @mail_content).deliver_now
+    end
+
+    render :sent_mail
+  end
+
   private
 
   def group_params

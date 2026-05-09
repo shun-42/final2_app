@@ -66,3 +66,5 @@ group :test do
 end
 
 gem 'net-smtp'
+
+gem 'dotenv-rails'
