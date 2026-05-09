@@ -1,0 +1,5 @@
+<% if chat.user_id == Current.user.id %>
+    <p style="text-align: right;"><%= chat.message %></p>
+  <% else %>
+    <p style="text-align: left;"><%= chat.message %></p>
+  <% end %>

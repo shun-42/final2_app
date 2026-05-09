@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :groups do
+    resource :group_user, only: [:create, :destroy]
+  end
+  
   get "searches/search"
   
   root to: "homes#top"

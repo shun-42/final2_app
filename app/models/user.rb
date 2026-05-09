@@ -17,7 +17,11 @@ class User < ApplicationRecord
   has_many :books, dependent: :destroy
   
   has_many :user_rooms,dependent: :destroy
-  has_many :chats
+  has_many :chats, dependent: :destroy
+  has_many :rooms, through: :user_rooms
+
+  has_many :group_users, dependent: :destroy
+  has_many :groups, through: :group_users
 
   validates :name, presence: true, uniqueness: true, length: { minimum: 2, maximum: 20 }
   validates :introduction, length: { maximum: 50 }
@@ -36,7 +40,7 @@ class User < ApplicationRecord
   end
 
   def unfollow(user)
-    active_relationships.find_by(followed_id: user.id)&.destroy
+    active_relationships.find_by(followed_id: user.id).destroy
   end
 
   def following?(user)
