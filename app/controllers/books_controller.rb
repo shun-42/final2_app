@@ -28,7 +28,7 @@ class BooksController < ApplicationController
 
   def update
     @book = Book.find(params[:id])
-    if @book.update(book_params)
+    if @book.update(book_params.except(:score))
       flash[:notice] = "You have updated book successfully."
       redirect_to book_path(@book)
     else
@@ -46,9 +46,15 @@ class BooksController < ApplicationController
   
   
   def index
-    @books = Book.all.sort{|a,b|
+    if params[:latest]
+     @books = Book.latest
+    elsif params[:star_count]
+      @books = Book.star_count
+    else
+     @books = Book.all.sort{|a,b|
       b.favorites.count <=> a.favorites.count
-    }
+     }
+    end
     @user = Current.user
     @book = Book.new
 
@@ -57,6 +63,10 @@ class BooksController < ApplicationController
   def show
     @book = Book.find(params[:id])
     @post_comment = PostComment.new
+    unless ViewCount.exists?(user_id: Current.user.id, book_id: @book.id)
+      Current.user.view_counts.create(book_id: @book.id)
+    end
+
   end
 
 

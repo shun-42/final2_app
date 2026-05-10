@@ -12,3 +12,4 @@ pin "bootstrap", to: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/boots
 pin "raty-js" # @4.3.0
 # 自作のratyラッパーをimportmapに登録
 pin "custom/raty", to: "custom/raty.js"
+pin "script"

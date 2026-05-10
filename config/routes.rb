@@ -10,11 +10,12 @@ Rails.application.routes.draw do
   root to: "homes#top"
   get 'home/about' => 'homes#about', as: 'home_about'
   resources :users, only: [:new, :create, :index, :show, :edit, :update], path: 'users', path_names: { new: 'sign_up' } do
-      # この中にフォロー機能を入れる（ネスト）
-      resource :relationships, only: [:create, :destroy]
-  
-      get "followings" => "relationships#followings", as: "followings"
-      get "followers" => "relationships#followers", as: "followers"
+   get "search" => "users#search"
+   # この中にフォロー機能を入れる（ネスト）
+   resource :relationships, only: [:create, :destroy]
+    
+    get "followings" => "relationships#followings", as: "followings"
+    get "followers" => "relationships#followers", as: "followers"
   end
   get 'session', to: 'sessions#new', as: :new_session
   resource :session, only: [:create, :destroy]

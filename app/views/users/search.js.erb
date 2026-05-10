@@ -1,0 +1,5 @@
+// jQueryを使わない書き方
+const resultArea = document.getElementById('search_result');
+if (resultArea) {
+  resultArea.innerHTML = "<%= j(render 'search', search_book: @search_book) %>";
+}
